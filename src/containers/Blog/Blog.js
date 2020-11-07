@@ -20,7 +20,7 @@ class Blog extends Component {
             console.log([...response.data]);
             this.setState({ students: [...response.data] });
             //חיתוך איברי מערך
-            const studs = [...response.data].slice(0, 3);
+            const studs = [...response.data].slice(0, 6);
             const updateStu = studs.map(s => {
                 return {
                     ...s,

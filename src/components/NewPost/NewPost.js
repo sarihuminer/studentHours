@@ -4,22 +4,27 @@ import './NewPost.css';
 
 class NewPost extends Component {
     state = {
-        Id: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        institutionkod: '',
+        student: {
+            Id: '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
+            institutionkod: '',
+        }
+
     }
-    addStudentHandler() {
-        if (this.state && this.state.id != null && this.state.firstName != null) {
+    addStudentHandler = () => {
+        debugger;
+        const stu = { ...this.state.student };
+        if (stu['firstName'] != '') {
             const student = {
-                Id: this.state.id,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                phone: this.state.phone,
-                email: this.state.email,
-                institutionkod: this.state.institutionkod,
+                Id: stu['Id'],
+                firstName: stu['firstName'],
+                lastName: stu['lastName'],
+                phone: stu['phone'],
+                email: stu['email'],
+                institutionkod: stu['institutionkod'],
             }
 
             axios.post("student/addNew", student).then(response => {
@@ -30,24 +35,35 @@ class NewPost extends Component {
 
 
     }
+
+    ChangeHandler = (event) => {
+        debugger;
+        const id = event.target.id;
+
+        const newStudent = { ...this.state.student }
+        newStudent[id] = event.target.value;
+
+        this.setState({ student: newStudent });
+        console.log(this.state.student)
+    }
     render() {
         return (
             <div className="NewPost">
                 <h1>הוספת תלמידה</h1>
                 <label>שם פרטי</label>
-                <input type="text" value={this.state.firstName} onChange={(event) => this.setState({ firstName: event.target.value })} />
+                <input type="text" id="firstName" value={this.state.firstName} onChange={(event) => this.ChangeHandler(event)} />
                 <label>שם משפחה</label>
-                <input type="text" value={this.state.lastName} onChange={(event) => this.setState({ lastName: event.target.value })} />
+                <input type="text" id="lastName" value={this.state.lastName} onChange={(event) => this.ChangeHandler(event)} />
                 <label>טלפון</label>
-                <input type="text" value={this.state.phone} onChange={(event) => this.setState({ phone: event.target.value })} />
+                <input type="text" id="phone" value={this.state.phone} onChange={(event) => this.ChangeHandler(event)} />
                 <label>מייל</label>
-                <input type="text" value={this.state.email} onChange={(event) => this.setState({ email: event.target.value })} />
+                <input type="text" id="email" value={this.state.email} onChange={(event) => this.ChangeHandler(event)} />
                 <label>מוסד</label>
-                <input type="text" value={this.state.institutionkod} onChange={(event) => this.setState({ institutionkod: event.target.value })} />
+                <input type="text" id="institutionkod" value={this.state.institutionkod} onChange={(event) => this.ChangeHandler(event)} />
                 <label>Content</label>
-                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({ content: event.target.value })} />
+                <textarea rows="4" value={this.state.content} onChange={(event) => this.ChangeHandler(event)} />
                 <label>Author</label>
-                <select value={this.state.author} onChange={(event) => this.setState({ author: event.target.value })}>
+                <select value={this.state.author} onChange={(event) => this.ChangeHandler(event)}>
                     <option value="Max">Max</option>
                     <option value="Manu">Manu</option>
                 </select>

@@ -25,6 +25,16 @@ class FullPost extends Component {
 
     }
 
+
+    deleteHandler = () => {
+        const stu = { ...this.state.loadedStudent }['Id'];
+
+        debugger
+        axios.delete("student/delete/" + stu).then(response => {
+            console.log(response);
+        })
+    }
+
     render() {
         let post = <p style={{ textAlign: "center" }}>בבקשה בחרי תלמידה!</p>;
         if (this.props.id && this.state.loadedStudent) {
@@ -34,7 +44,7 @@ class FullPost extends Component {
                     <h1>{this.state.loadedStudent.firstName + ' ' + this.state.loadedStudent.lastName}</h1>
                     <p>{this.state.loadedStudent.phone} <br /> {this.state.loadedStudent.email} <br /> {this.state.loadedStudent.institutionkod}</p>
                     <div className="Edit">
-                        <button className="Delete">Delete</button>
+                        <button className="Delete" onClick={this.deleteHandler}>Delete</button>
                     </div>
                 </div>
 
